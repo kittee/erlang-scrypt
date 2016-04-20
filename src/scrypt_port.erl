@@ -10,9 +10,16 @@
 start_link() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
+start_standalone() ->
+    gen_server:start_link(?MODULE, [], []).
+
 -spec scrypt(binary(), binary(), pos_integer(), pos_integer(), pos_integer(), pos_integer()) -> binary().
 scrypt(Passwd, Salt, N, R, P, Buflen) ->
-    gen_server:call(?MODULE, {scrypt, Passwd, Salt, N, R, P, Buflen}, infinity).
+    scrypt(?MODULE, Passwd, Salt, N, R, P, Buflen).
+
+-spec scrypt(pid() | atom(), binary(), binary(), pos_integer(), pos_integer(), pos_integer(), pos_integer()) -> binary().
+scrypt(Ref, Passwd, Salt, N, R, P, Buflen) ->
+    gen_server:call(Ref, {scrypt, Passwd, Salt, N, R, P, Buflen}, infinity).
 
 %%---------------------------------------------------------------------------
 
