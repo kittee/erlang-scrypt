@@ -1,6 +1,6 @@
 -module(scrypt).
 
--export([start/0, scrypt/6]).
+-export([start/0, scrypt/6, scrypt/7]).
 
 -ifdef(TEST).
 -include_lib("eunit/include/eunit.hrl").
@@ -11,6 +11,9 @@ start() ->
 
 scrypt(Passwd, Salt, N, R, P, Buflen) ->
     scrypt_port:scrypt(Passwd, Salt, N, R, P, Buflen).
+
+scrypt(Ref, Passwd, Salt, N, R, P, Buflen) ->
+    scrypt_port:scrypt(Ref, Passwd, Salt, N, R, P, Buflen).
 
 -ifdef(TEST).
 
